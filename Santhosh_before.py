@@ -49,7 +49,7 @@ pp = pprint.PrettyPrinter(indent=4)
 ##############################
 
 # import dataset from csv
-dataframe = pd.read_csv('/home/xvpher/TimeSeries/Data/sample1.csv', engine='python')
+dataframe = pd.read_csv(r'D:\5th\Project\Time series analysis\dataset\sample1.csv', engine='python')
 
 # select lead to be used
 lead = 'II'
@@ -108,9 +108,9 @@ a
 
 # %%
 #start the use data frame with 225 -1225
-#                              1225 -2225  therfore 1324 - 2324
+#                              1225 -2225  therfore 1324 - 2324 
 #                              2405-3405
-
+                                                                     
 
 # %%
 A=pd.DataFrame(a)
@@ -165,15 +165,15 @@ def stationarity(timeseries):
     wind=365
     rolmean=timeseries.rolling(window=wind).mean()
     rolstd=timeseries.rolling(window=wind).std()
-
+    
     plt.figure(figsize=(20,10))
     actual=plt.plot(timeseries, color='red', label='Actual')
-    mean_6=plt.plot(rolmean, color='green', label='Rolling Mean')
+    mean_6=plt.plot(rolmean, color='green', label='Rolling Mean') 
     std_6=plt.plot(rolstd, color='black', label='Rolling Std')
     plt.legend(loc='best')
     plt.title('Rolling Mean & Standard Deviation')
     plt.show(block=False)
-
+    
     print('Dickey-Fuller Test: ')
     dftest=adfuller(timeseries, autolag='AIC')
     dfoutput=pd.Series(dftest[0:4], index=['Test Statistic','p-value','Lags Used','No. of Obs'])
@@ -207,9 +207,9 @@ plt.plot(Use_dataframe)
 
 # %%
 """
-####
+####  
      A) Box Cox Tranformation
-
+    
 """
 
 # %%
@@ -304,7 +304,7 @@ plt.show()
 
 # %%
 """
-### power transformation
+### power transformation 
 """
 
 # %%
@@ -386,7 +386,7 @@ plt.show()
 
 # %%
 """
-## Spectral Analysis
+## Spectral Analysis 
 """
 
 # %%
@@ -496,7 +496,7 @@ plt.legend(loc='best')
 """
 
 # %%
-# %%time
+%%time
 ##############################
 # Build ARIMA (10,0,0)
 ##############################
@@ -513,20 +513,20 @@ plt.plot(residual)
 plt.plot(results.fittedvalues, color='red')
 plt.title('RSS: %.4f'% sum((results.fittedvalues-residual)**2))
 print('plotting ARIMA model')
-print('------------------------------------')
+
 # %%
 results.fittedvalues[365:]
 
+
 # %%
-# %%time
+%%time
 ##############################
 # Build SARIMA (1,1,0)x(1,0,0)s
 ##############################
-print('------SARIMA start-----------')
 
 model = sm.tsa.statespace.sarimax.SARIMAX(df_boxcox, order=(1,1,0), seasonal_order=(1,0,0,365))
 model_4 = model.fit()
 print(model_4.summary())
 
-print('---------END process------------')
+
 # %%
